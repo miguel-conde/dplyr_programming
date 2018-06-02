@@ -114,6 +114,24 @@ my_summarise <- function(df, ...) {
 
 my_summarise(df, g1, g2)
 
+# With mutate now:
+my_mutate <- function(df, ...) {
+  l_vars <- quos(...)
+  
+  for (v in l_vars) {
+    mean_name = paste0("mean_", quo_name(v))
+    sum_name <- paste0("sum_", quo_name(v))
+    
+    df <- mutate(df,
+           !! mean_name := mean(!! v),
+           !! sum_name := sum(!! v))
+  }
+  df
+}
+
+my_mutate(df, a)
+my_mutate(df, a, b)
+
 # !!! takes a list of elements and splices them into to the current call. 
 # Look at the bottom of the !!! and think ....
 
